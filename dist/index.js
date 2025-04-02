@@ -561,14 +561,12 @@ app.use(express.urlencoded({ extended: false }));
     console.error("Server error:", err);
     res.status(500).json({ message: "Internal Server Error" });
   });
-  if (process.env.NODE_ENV === "production") {
-    const distPath = path.join(__dirname, "../dist/public");
-    console.log("Serving static files from:", distPath);
-    app.use(express.static(distPath));
-    app.get("*", (_req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
-    });
-  }
+  const distPath = path.join(__dirname, "../dist/public");
+  console.log("Serving static files from:", distPath);
+  app.use(express.static(distPath));
+  app.get("*", (_req, res) => {
+    res.sendFile(path.join(distPath, "index.html"));
+  });
   const port = process.env.PORT || 3e3;
   server.listen(port, () => {
     console.log(`Server running on port ${port} in ${process.env.NODE_ENV || "development"} mode`);

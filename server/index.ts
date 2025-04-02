@@ -20,15 +20,13 @@ app.use(express.urlencoded({ extended: false }));
     res.status(500).json({ message: "Internal Server Error" });
   });
 
-  // Serve static files in production
-  if (process.env.NODE_ENV === "production") {
-    const distPath = path.join(__dirname, "../dist/public");
-    console.log("Serving static files from:", distPath);
-    app.use(express.static(distPath));
-    app.get("*", (_req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
-    });
-  }
+  // Serve static files
+  const distPath = path.join(__dirname, "../dist/public");
+  console.log("Serving static files from:", distPath);
+  app.use(express.static(distPath));
+  app.get("*", (_req, res) => {
+    res.sendFile(path.join(distPath, "index.html"));
+  });
 
   // Start the server
   const port = process.env.PORT || 3000;
