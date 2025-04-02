@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y \
 COPY package*.json ./
 RUN npm ci
 
+# Install esbuild globally
+RUN npm install -g esbuild
+
 # Copy source code
 COPY . .
 
